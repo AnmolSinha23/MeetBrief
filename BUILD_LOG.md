@@ -14,12 +14,18 @@
    - If `response_format={"type": "json_object"}` is rejected by a provider, defensive fallback strips markdown code fences from the prompt-guided JSON response.
 
 ## Progress
-- **Phase 0 (Scaffold & Preflight)**: In progress.
+- **Phase 0 (Scaffold & Preflight)**: Completed.
   - Git repository initialized.
   - `.gitignore`, `.env.example`, `LICENSE`, `requirements.txt` created.
   - Directory structure initialized.
   - `scripts/start_bifrost.ps1`, `scripts/start_bifrost.sh`, `bifrost/config.json` created.
   - `scripts/doctor.py` and `scripts/run.py` created.
+- **Phase 1 (Core models, config, window)**: Completed.
+  - Implemented `app/models.py` with all Pydantic models from §4.
+  - Implemented `app/config.py` with `pydantic-settings` and cached `get_settings()`.
+  - Implemented `app/steps/window.py` enforcing 30-day window, timezone awareness, future clipping, and warnings.
+  - Implemented `tests/test_window.py` covering past meetings, today, 3-day future, 45-day future, midnight timezone crossings, and naive datetime rejection.
+  - All 6 unit tests passing.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.
