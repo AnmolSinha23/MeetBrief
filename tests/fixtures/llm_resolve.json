@@ -1,0 +1,54 @@
+{
+  "stripe": {
+    "candidates": [
+      {
+        "canonical_name": "Stripe",
+        "entity_type": "company",
+        "aliases": ["Stripe, Inc.", "Stripe Payments"],
+        "official_domain": "stripe.com",
+        "affiliation": null,
+        "description": "Financial infrastructure platform for businesses, powering payments, subscriptions, and financial software worldwide.",
+        "confidence": 0.98,
+        "label": "Global financial infrastructure platform"
+      }
+    ]
+  },
+  "jensen_huang": {
+    "candidates": [
+      {
+        "canonical_name": "Jensen Huang",
+        "entity_type": "person",
+        "aliases": ["Jen-Hsun Huang"],
+        "official_domain": "nvidia.com",
+        "affiliation": "NVIDIA",
+        "description": "Co-founder, President, and CEO of NVIDIA, leading accelerated computing and AI infrastructure.",
+        "confidence": 0.99,
+        "label": "President & CEO of NVIDIA"
+      }
+    ]
+  },
+  "ambiguous": {
+    "candidates": [
+      {
+        "canonical_name": "Alex Smith (Founder)",
+        "entity_type": "person",
+        "aliases": [],
+        "official_domain": null,
+        "affiliation": "Acme Ventures",
+        "description": "Managing Partner at Acme Ventures specializing in seed-stage software.",
+        "confidence": 0.45,
+        "label": "Partner at Acme Ventures"
+      },
+      {
+        "canonical_name": "Alex Smith (Engineer)",
+        "entity_type": "person",
+        "aliases": [],
+        "official_domain": null,
+        "affiliation": "Beta Robotics",
+        "description": "Robotics systems researcher and open-source contributor.",
+        "confidence": 0.42,
+        "label": "Robotics lead at Beta Robotics"
+      }
+    ]
+  }
+}

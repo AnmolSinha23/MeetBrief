@@ -1,0 +1,31 @@
+{
+  "default": {
+    "verdicts": [
+      {
+        "claim_id": "dev_0",
+        "verdict": "supported",
+        "note": "Fully supported by cited official newsroom source."
+      },
+      {
+        "claim_id": "dev_1",
+        "verdict": "supported",
+        "note": "NVIDIA partnership and 500 enterprise customers supported by PR text."
+      },
+      {
+        "claim_id": "dev_2",
+        "verdict": "supported",
+        "note": "40 countries and stablecoin payouts confirmed in article."
+      },
+      {
+        "claim_id": "dev_3",
+        "verdict": "supported",
+        "note": "Appointment of Claire Hughes confirmed by report."
+      },
+      {
+        "claim_id": "dev_4",
+        "verdict": "supported",
+        "note": "$350B volume and 28% growth confirmed by financial reporting."
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "stripe": {
+    "tldr": [
+      {
+        "text": "Stripe launched an Agentic Payments Toolkit allowing AI systems to execute authorized autonomous transactions.",
+        "source_ids": ["S1", "S2"]
+      },
+      {
+        "text": "Announced an enterprise partnership with NVIDIA to power GPU cloud infrastructure billing for 500+ accounts.",
+        "source_ids": ["S3"]
+      },
+      {
+        "text": "Reported strong Q3 volume reaching $350B, a 28% year-over-year growth rate.",
+        "source_ids": ["S6"]
+      }
+    ],
+    "developments": [
+      {
+        "date": "2026-11-05",
+        "category": "product",
+        "headline": "Launches Agentic Payments Toolkit for AI agents",
+        "detail": "Enables autonomous software agents to transact with guardrails, fraud checks, and programmatic limits.",
+        "why_it_matters": "Directly positions Stripe as the leading payment rails for emerging autonomous AI commerce.",
+        "source_ids": ["S1", "S2"]
+      },
+      {
+        "date": "2026-11-08",
+        "category": "partnership",
+        "headline": "Partners with NVIDIA on enterprise cloud billing",
+        "detail": "Standardizes subscription and usage-based metering for enterprise AI cluster deployments across 500 enterprise customers.",
+        "why_it_matters": "Secures strategic high-value transaction volume from top-tier generative AI infrastructure providers.",
+        "source_ids": ["S3"]
+      },
+      {
+        "date": "2026-11-02",
+        "category": "product",
+        "headline": "Expands stablecoin payouts to 40 additional countries",
+        "detail": "Allows businesses to instantly settle contractor and vendor payouts in USDC across 40 new jurisdictions.",
+        "why_it_matters": "Accelerates international cross-border payment flows without conventional wire transfer delays.",
+        "source_ids": ["S4"]
+      },
+      {
+        "date": "2026-10-25",
+        "category": "leadership",
+        "headline": "Appoints former AWS executive Claire Hughes as Head of Infrastructure",
+        "detail": "Brings cloud engineering veteran to lead global platform scaling and multi-region availability initiatives.",
+        "why_it_matters": "Signals investment in infrastructure durability as enterprise workload volumes surge.",
+        "source_ids": ["S5"]
+      },
+      {
+        "date": "2026-10-29",
+        "category": "financial",
+        "headline": "Q3 payment volume reaches $350B up 28% year-over-year",
+        "detail": "Strong quarterly volume acceleration driven by enterprise software and recurring AI subscriptions.",
+        "why_it_matters": "Demonstrates accelerating revenue momentum ahead of long-term capital strategy milestones.",
+        "source_ids": ["S6"]
+      }
+    ],
+    "talking_points": [
+      {
+        "text": "Explore how agentic payment primitives can integrate with our internal autonomous agent workflows.",
+        "source_ids": ["S1"]
+      },
+      {
+        "text": "Discuss synergy opportunities around enterprise cloud infrastructure and usage billing.",
+        "source_ids": ["S3"]
+      },
+      {
+        "text": "Inquire about global payout capabilities in newly supported stablecoin countries.",
+        "source_ids": ["S4"]
+      }
+    ],
+    "open_questions": [
+      {
+        "text": "How do you foresee enterprise risk teams managing liability boundaries for agent-initiated payments?",
+        "rationale": "Directly relevant to adopting the Agentic Payments Toolkit.",
+        "source_ids": ["S1"]
+      },
+      {
+        "text": "What are your joint roadmap priorities with NVIDIA for high-throughput GPU inference metering?",
+        "rationale": "Clarifies enterprise AI infrastructure support.",
+        "source_ids": ["S3"]
+      },
+      {
+        "text": "What regulatory hurdles or compliance requirements are most critical in the 40 new stablecoin markets?",
+        "rationale": "Informs international rollout strategy.",
+        "source_ids": ["S4"]
+      },
+      {
+        "text": "How will Claire Hughes's infrastructure priorities influence API reliability and SLA commitments?",
+        "rationale": "Important for mission-critical vendor evaluations.",
+        "source_ids": ["S5"]
+      },
+      {
+        "text": "Which merchant segments contributed most strongly to the 28% volume growth in Q3?",
+        "rationale": "Provides visibility into sustainable expansion drivers.",
+        "source_ids": ["S6"]
+      }
+    ],
+    "risks": [
+      {
+        "text": "Regulatory scrutiny regarding stablecoin transaction flows in emerging international corridors.",
+        "source_ids": ["S4"]
+      },
+      {
+        "text": "Exposure to volatile computing demand cycles tied to AI infrastructure buildouts.",
+        "source_ids": ["S3"]
+      }
+    ],
+    "uncertainties": [
+      "Exact fee schedule for agentic microtransactions has not yet been publicly disclosed."
+    ],
+    "evidence_gaps": [
+      "No public disclosures regarding M&A or acquisition discussions in the past 30 days."
+    ]
+  }
+}

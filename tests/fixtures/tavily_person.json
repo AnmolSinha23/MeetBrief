@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "title": "Jensen Huang Keynote at AI Infrastructure Summit: The Agentic Era",
+      "url": "https://nvidianews.nvidia.com/news/jensen-huang-keynote-ai-summit-2026",
+      "content": "NVIDIA CEO Jensen Huang unveiled next-generation Rubin Ultra hardware architectures and stressed the rapid enterprise transition toward agentic reasoning systems.",
+      "score": 0.95,
+      "published_date": "2026-11-04"
+    },
+    {
+      "title": "NVIDIA CEO Jensen Huang Discusses Sovereign AI Investments on Bloomberg TV",
+      "url": "https://bloomberg.com/news/videos/2026-10-30/jensen-huang-sovereign-ai-interview",
+      "content": "Jensen Huang highlighted sovereign AI deployments across European and Asian governments, projecting $50B in national computing investments over 3 years.",
+      "score": 0.91,
+      "published_date": "2026-10-30"
+    },
+    {
+      "title": "Jensen Huang Receives Global Engineering Leadership Award in Tokyo",
+      "url": "https://reuters.com/technology/jensen-huang-engineering-award-tokyo-2026-11-09/",
+      "content": "NVIDIA co-founder and Chief Executive Jensen Huang was honored in Tokyo with the IEEE International Leadership Award for contributions to parallel computing.",
+      "score": 0.88,
+      "published_date": "2026-11-09"
+    },
+    {
+      "title": "Jensen Huang Bio and NVIDIA Executive Profile",
+      "url": "https://www.nvidia.com/en-us/about-nvidia/leadership-team/jensen-huang/",
+      "content": "Jensen Huang co-founded NVIDIA in 1993 and has served since its inception as president, chief executive officer, and a member of the board of directors.",
+      "score": 0.90,
+      "published_date": null
+    }
+  ]
+}

@@ -26,6 +26,12 @@
   - Implemented `app/steps/window.py` enforcing 30-day window, timezone awareness, future clipping, and warnings.
   - Implemented `tests/test_window.py` covering past meetings, today, 3-day future, 45-day future, midnight timezone crossings, and naive datetime rejection.
   - All 6 unit tests passing.
+- **Phase 2 (Clients with cache and mocks)**: Completed.
+  - Implemented `app/cache.py` disk JSON cache with TTL.
+  - Implemented `app/clients/search.py` with `SearchClient` Protocol, `TavilySearchClient` (async, timeout, retries, date-fallback, extract), and `MockSearchClient`.
+  - Implemented `app/clients/llm.py` with `LLMClient` Protocol, `BifrostLLMClient` (async OpenAI SDK pointed at Bifrost `/v1` and `/openai` drop-in route, JSON fence stripping, 429 rate limit backoff), and `MockLLMClient`.
+  - Created realistic fixtures in `tests/fixtures/`: `tavily_stripe.json` (includes stale-dated, undated, wrong-entity, syndicated duplicate, and prompt-injection items), `tavily_person.json`, `llm_resolve.json`, `llm_synthesize.json`, `llm_verify.json`.
+  - Added unit tests in `tests/test_clients.py`; 10/10 tests passing.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.
