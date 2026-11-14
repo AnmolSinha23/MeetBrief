@@ -32,6 +32,24 @@
   - Implemented `app/clients/llm.py` with `LLMClient` Protocol, `BifrostLLMClient` (async OpenAI SDK pointed at Bifrost `/v1` and `/openai` drop-in route, JSON fence stripping, 429 rate limit backoff), and `MockLLMClient`.
   - Created realistic fixtures in `tests/fixtures/`: `tavily_stripe.json` (includes stale-dated, undated, wrong-entity, syndicated duplicate, and prompt-injection items), `tavily_person.json`, `llm_resolve.json`, `llm_synthesize.json`, `llm_verify.json`.
   - Added unit tests in `tests/test_clients.py`; 10/10 tests passing.
+- **Phase 3 (Resolve, plan, research, normalize)**: Completed.
+  - Implemented `app/steps/resolve.py` for entity disambiguation and candidate generation.
+  - Implemented `app/steps/plan.py` for deterministic query planning across company and person entities.
+  - Implemented `app/steps/research.py` for concurrent execution, error tolerance, and trace tracking.
+  - Implemented `app/steps/normalize.py` for URL canonicalization, date parsing, 30-day window filtering, relevance checks, primary source tagging, deduplication & syndication clustering (Jaccard similarity), score/recency ranking, and ID assignment.
+  - Added unit tests in `tests/test_normalize.py`; 14/14 tests passing.
+  - Checkpoint 3 validation run output (Stripe):
+    - Window: 2026-10-15 to 2026-11-14
+    - Resolved: Stripe (company), official_domain: stripe.com
+    - Planned queries: 8
+    - Raw results found: 48 (deduped to 6 sources)
+    - Kept Sources Table:
+      - S1 | 2026-11-05 | stripe.com     | Primary: True  | Cluster: 1 | Stripe Introduces Agentic Payments Toolkit
+      - S2 | 2026-10-29 | wsj.com        | Primary: False | Cluster: 5 | Stripe Q3 2026 Platform Volume Hits $350B
+      - S3 | 2026-11-08 | prnewswire.com | Primary: True  | Cluster: 2 | Stripe Partners with NVIDIA on Enterprise Billing
+      - S4 | 2026-11-02 | techcrunch.com | Primary: False | Cluster: 3 | Stripe Expands Global Stablecoin Payouts
+      - S5 | 2026-11-05 | yahoo.com      | Primary: False | Cluster: 1 | Stripe Introduces Agentic Payments Toolkit (syndicated)
+      - S6 | 2026-10-25 | bloomberg.com  | Primary: False | Cluster: 4 | Stripe Appoints Former AWS Executive Claire Hughes
 
 ## Commands & Outcomes
 - `git init`: initialized repository.

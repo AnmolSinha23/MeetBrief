@@ -206,9 +206,10 @@ class MockLLMClient:
         # 2. Entity resolution prompt
         if "candidates" in prompt_combo or "canonical_name" in prompt_combo:
             data = self._load_fixture("llm_resolve.json")
-            if "ambiguous" in prompt_combo or "alex smith" in prompt_combo:
+            u_lower = user_prompt.lower()
+            if "ambiguous" in u_lower or "alex smith" in u_lower:
                 return data.get("ambiguous", {}), usage
-            elif "jensen" in prompt_combo or "huang" in prompt_combo or "nvidia" in prompt_combo:
+            elif "jensen" in u_lower or "huang" in u_lower or "target entity: nvidia" in u_lower:
                 return data.get("jensen_huang", {}), usage
             return data.get("stripe", {}), usage
 
