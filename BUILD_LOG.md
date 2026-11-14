@@ -50,6 +50,13 @@
       - S4 | 2026-11-02 | techcrunch.com | Primary: False | Cluster: 3 | Stripe Expands Global Stablecoin Payouts
       - S5 | 2026-11-05 | yahoo.com      | Primary: False | Cluster: 1 | Stripe Introduces Agentic Payments Toolkit (syndicated)
       - S6 | 2026-10-25 | bloomberg.com  | Primary: False | Cluster: 4 | Stripe Appoints Former AWS Executive Claire Hughes
+- **Phase 4 (Grounded synthesis and verification)**: Completed.
+  - Implemented `app/prompts.py` with system and user prompt templates per §7.
+  - Implemented `app/steps/synthesize.py` adhering to schema validation and repair retries.
+  - Implemented `app/steps/verify.py` with deterministic number grounding, date boundary enforcement, code-computed confidence (VERIFIED/REPORTED/UNVERIFIED), batched LLM claim grounding check, unknown source dropping, and citation renumbering S1..Sn.
+  - Fixed Pydantic `Development.date` field annotation to prevent class-level namespace shadowing.
+  - Added unit tests in `tests/test_verify.py`; 17/17 tests passing.
+  - Checkpoint 4 validation run verified end-to-end for both Company (Stripe) and Person (Jensen Huang) with 100% citation coverage and valid URLs.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.

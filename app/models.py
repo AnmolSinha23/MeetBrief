@@ -1,4 +1,5 @@
 from __future__ import annotations
+import datetime as dt
 from datetime import date, datetime
 from enum import Enum
 from typing import Literal, Optional
@@ -70,7 +71,7 @@ class Confidence(str, Enum):
     unverified = "UNVERIFIED"  # undated, inferred, conflicting, or failed grounding check
 
 class Development(BaseModel):
-    date: Optional[date] = None
+    date: Optional[dt.date] = None
     category: Literal[
         "news", "product", "leadership", "funding", "partnership", "financial", "risk", "media", "other"
     ]
