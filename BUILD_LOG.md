@@ -93,6 +93,15 @@
     - 100% of claims carry >= 1 valid citation.
     - 100% of dated developments reside strictly inside the 30-day temporal window.
     - Ambiguous entities gracefully trigger `needs_clarification` without hallucinated assumptions.
+- **Phase 8 (Documentation, packaging, handoff)**: Completed.
+  - Created `README.md` following all 12 sections in §11.
+  - Created `docs/architecture.md` with system Mermaid diagram, design rationale, and Bifrost gateway deep dive.
+  - Created `docs/demo-script.md` providing 2.5-minute presentation script.
+  - Created `docs/future-work.md` capturing roadmap extensions.
+  - Created `Dockerfile` (Python 3.12-slim container).
+  - Created `HANDOFF.md` per §16 with step-by-step instructions for Windows and macOS/Linux.
+  - Verified zero secret leakage (`git grep` check clean, `.env` untracked).
+  - Confirmed `python scripts/doctor.py --offline` PASS.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.
