@@ -85,6 +85,14 @@
     - `trace_panel.png` (collapsible deterministic research audit trace)
     - `print_preview.png` (pure printable one-pager layout)
     - `disambiguation.png` (interactive candidate selection cards)
+- **Phase 7 (Quality pass: eval + sample)**: Completed.
+  - Implemented `scripts/make_sample.py` to regenerate the committed sample briefing.
+  - Implemented `scripts/eval_samples.py` covering 4 diverse scenarios (Stripe, NVIDIA, Jensen Huang, Alex Smith).
+  - Executed evaluation harness and generated `docs/eval-results.md`.
+  - Invariants confirmed:
+    - 100% of claims carry >= 1 valid citation.
+    - 100% of dated developments reside strictly inside the 30-day temporal window.
+    - Ambiguous entities gracefully trigger `needs_clarification` without hallucinated assumptions.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.
