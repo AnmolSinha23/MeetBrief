@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeetBrief — Pre-Meeting Briefing Agent</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="logo-icon">⚡</span>
+        <div>
+          <h1 class="logo-text">MeetBrief</h1>
+          <p class="tagline">Grounded Pre-Meeting Intelligence · Tavily + Bifrost</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="connectionStatus" class="status-indicator">Checking system health...</div>
+        <button id="btnLoadDemoHeader" class="btn btn-secondary btn-sm">Load Demo Briefing</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-layout">
+    <!-- Left Column: Input Form & Job Progress -->
+    <aside class="sidebar-panel no-print">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2>Meeting Details</h2>
+          <span class="badge-pill">30-Day Window</span>
+        </div>
+
+        <form id="briefingForm">
+          <!-- Entity Input -->
+          <div class="form-group">
+            <label for="entityInput">Entity Name <span class="required">*</span></label>
+            <input
+              type="text"
+              id="entityInput"
+              name="entity"
+              class="form-control"
+              placeholder="e.g. Stripe, or Jensen Huang"
+              required
+              minlength="2"
+              maxlength="120"
+            />
+          </div>
+
+          <!-- Entity Type Toggle -->
+          <div class="form-group">
+            <label>Entity Type</label>
+            <div class="radio-pill-group">
+              <label class="radio-pill">
+                <input type="radio" name="entityType" value="auto" checked>
+                <span>Auto</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="entityType" value="company">
+                <span>Company</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="entityType" value="person">
+                <span>Person</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Disambiguation Hint -->
+          <div class="form-group">
+            <label for="hintInput">Disambiguation Hint <span class="optional">(optional)</span></label>
+            <input
+              type="text"
+              id="hintInput"
+              name="hint"
+              class="form-control"
+              placeholder="e.g. CEO of Acme / acme.com"
+              maxlength="200"
+            />
+          </div>
+
+          <!-- Meeting Date/Time -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="meetingTimeInput">Meeting Date & Time <span class="required">*</span></label>
+              <input
+                type="datetime-local"
+                id="meetingTimeInput"
+                name="meetingTime"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group flex-1">
+              <label for="timezoneDisplay">Timezone</label>
+              <input
+                type="text"
+                id="timezoneDisplay"
+                class="form-control"
+                readonly
+              />
+            </div>
+          </div>
+
+          <!-- Meeting Type -->
+          <div class="form-group">
+            <label for="meetingTypeSelect">Meeting Type</label>
+            <select id="meetingTypeSelect" name="meetingType" class="form-control">
+              <option value="investor">Investor (traction, financials, unit economics)</option>
+              <option value="sales">Sales (buying signals, org changes, priorities)</option>
+              <option value="partnership">Partnership (ecosystem fit, strategic overlap)</option>
+              <option value="bizdev">BizDev (new markets, expansion, leadership)</option>
+              <option value="general" selected>General (holistic executive briefing)</option>
+            </select>
+          </div>
+
+          <!-- User Context -->
+          <div class="form-group">
+            <label for="contextInput">Your Context & Goal <span class="optional">(optional)</span></label>
+            <textarea
+              id="contextInput"
+              name="userContext"
+              class="form-control"
+              rows="3"
+              maxlength="400"
+              placeholder="Who you are and your primary goal for this meeting..."
+            ></textarea>
+            <span class="char-count" id="contextCharCount">0/400</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button type="submit" id="btnSubmit" class="btn btn-primary btn-block">
+              <span class="btn-text">Generate Briefing</span>
+              <span class="spinner" style="display: none;"></span>
+            </button>
+            <button type="button" id="btnLoadDemo" class="btn btn-secondary btn-block">
+              Load Demo Briefing (No Keys Needed)
+            </button>
+          </div>
+        </form>
+
+        <!-- Error Banner -->
+        <div id="errorBanner" class="alert alert-error" style="display: none;">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-body">
+            <strong id="errorTitle">Generation Error</strong>
+            <p id="errorMessage"></p>
+          </div>
+        </div>
+
+        <!-- Disambiguation Card -->
+        <div id="disambiguationBox" class="panel-subcard" style="display: none;">
+          <h3>Select Matching Candidate</h3>
+          <p class="subtext">Multiple potential entities found. Click the correct one:</p>
+          <div id="candidateList" class="candidate-list"></div>
+        </div>
+
+        <!-- Stepper Progress Tracker -->
+        <div id="stepperBox" class="stepper-card" style="display: none;">
+          <div class="stepper-header">
+            <h3>Generating Briefing</h3>
+            <span id="stepProgressLabel" class="stepper-percent">Step 1 of 7</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar-fill" style="width: 14%;"></div>
+          </div>
+          <p id="currentStepText" class="current-step-text">Initializing research pipeline...</p>
+          <ul class="stepper-steps">
+            <li id="step1" class="step-item active"><span class="step-num">1</span> 30-Day Window</li>
+            <li id="step2" class="step-item"><span class="step-num">2</span> Entity Resolution</li>
+            <li id="step3" class="step-item"><span class="step-num">3</span> Query Planning</li>
+            <li id="step4" class="step-item"><span class="step-num">4</span> Tavily Research</li>
+            <li id="step5" class="step-item"><span class="step-num">5</span> Normalization & Clustering</li>
+            <li id="step6" class="step-item"><span class="step-num">6</span> Bifrost Synthesis</li>
+            <li id="step7" class="step-item"><span class="step-num">7</span> Verification & Confidence</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Column: Briefing One-Pager & Toolbar -->
+    <section class="content-panel">
+      <!-- Toolbar -->
+      <div id="briefingToolbar" class="toolbar no-print" style="display: none;">
+        <div class="toolbar-left">
+          <span class="toolbar-title" id="briefingTitleDisplay">Pre-Meeting Briefing</span>
+          <span id="briefingBadgeStatus" class="badge badge-VERIFIED">READY</span>
+        </div>
+        <div class="toolbar-actions">
+          <button id="btnCopyMd" class="btn btn-outline btn-sm" title="Copy Markdown to clipboard">
+            📋 Copy Markdown
+          </button>
+          <button id="btnDownloadMd" class="btn btn-outline btn-sm" title="Download Markdown file">
+            📥 Download .md
+          </button>
+          <button id="btnPrintPdf" class="btn btn-primary btn-sm" title="Print to A4 PDF">
+            🖨️ Print / Save PDF
+          </button>
+          <button id="btnToggleTrace" class="btn btn-secondary btn-sm" title="Inspect research pipeline audit log">
+            🔍 Research Trace
+          </button>
+        </div>
+      </div>
+
+      <!-- Collapsible Research Trace Panel -->
+      <div id="tracePanel" class="trace-panel no-print" style="display: none;">
+        <div class="trace-header">
+          <h3>Deterministic Research & Verification Trace</h3>
+          <button id="btnCloseTrace" class="btn-close">&times;</button>
+        </div>
+        <div class="trace-body" id="traceContent">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Document Preview Canvas (A4 proportioned) -->
+      <div id="previewContainer" class="preview-container">
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">📄</div>
+          <h2>No Briefing Loaded Yet</h2>
+          <p>
+            Enter a company or executive name on the left and click <strong>Generate Briefing</strong>,
+            or click <strong>Load Demo Briefing</strong> to view an offline, verified example.
+          </p>
+          <div class="empty-features">
+            <div class="feat-item">
+              <span class="feat-icon">⏱️</span>
+              <div>
+                <strong>Strict 30-Day Window</strong>
+                <p>Enforced in code, not left to LLM discretion</p>
+              </div>
+            </div>
+            <div class="feat-item">
+              <span class="feat-icon">🎯</span>
+              <div>
+                <strong>Computed Confidence</strong>
+                <p>VERIFIED / REPORTED / UNVERIFIED via source clustering</p>
+              </div>
+            </div>
+            <div class="feat-item">
+              <span class="feat-icon">🛡️</span>
+              <div>
+                <strong>Fact-Check Verification</strong>
+                <p>Numbers and entities strictly verified against source text</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rendered Briefing Frame / Container -->
+        <div id="briefingSheet" class="a4-sheet" style="display: none;">
+          <!-- Briefing HTML injected here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer no-print">
+    <div class="footer-container">
+      <span>MeetBrief · Built for Global AI Hackathon (Problem Statement 05)</span>
+      <span>Integrations: <strong>Tavily</strong> Search + <strong>Bifrost</strong> AI Gateway</span>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

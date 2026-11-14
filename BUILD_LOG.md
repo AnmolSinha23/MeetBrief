@@ -74,6 +74,17 @@
   - Generated committed offline sample `data/samples/sample_briefing.json`.
   - Added `tests/test_render.py`, `tests/test_pipeline_mock.py`, `tests/test_api.py`.
   - All 25 unit & integration tests passing. `python scripts/doctor.py --offline` PASS.
+- **Phase 6 (Frontend Web UI)**: Completed.
+  - Implemented single-page UI in `web/index.html` with responsive sidebar form and A4 canvas.
+  - Implemented `web/styles.css` with professional typography, badges, progress bar, trace viewer, and `@media print` rules.
+  - Implemented `web/app.js` with client timezone auto-detection, async polling, candidate disambiguation, Markdown export/copy, and A4 print triggers.
+  - Captured all required UI screenshots into `docs/screenshots/`:
+    - `form.png` (input form with empty canvas state)
+    - `progress.png` (7-step stepper during pipeline execution)
+    - `finished_briefing.png` (rendered A4 sheet with badges and clickable citations)
+    - `trace_panel.png` (collapsible deterministic research audit trace)
+    - `print_preview.png` (pure printable one-pager layout)
+    - `disambiguation.png` (interactive candidate selection cards)
 
 ## Commands & Outcomes
 - `git init`: initialized repository.
