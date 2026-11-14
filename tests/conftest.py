@@ -1,5 +1,9 @@
+import os
 import sys
 from pathlib import Path
+
+# Force MOCK_MODE for all tests
+os.environ["MOCK_MODE"] = "true"
 
 # Add project root to sys.path
 root_dir = Path(__file__).parent.parent

@@ -1,0 +1,67 @@
+# Briefing: {{ briefing.entity.canonical_name }} ({{ briefing.entity.entity_type | capitalize }})
+
+**Meeting Date:** {{ meeting_formatted }} ({{ briefing.input.timezone }})  
+**Meeting Type:** {{ briefing.input.meeting_type.value | capitalize }}  
+**Research Window:** {{ briefing.window.start.strftime('%d %b %Y') }} – {{ briefing.window.end.strftime('%d %b %Y') }}  
+**Generated:** {{ briefing.created_at.strftime('%d %b %Y %H:%M UTC') }}
+
+---
+
+## Executive Summary (TL;DR)
+{% for bullet in briefing.draft.tldr %}
+- {{ bullet.text }} {% if bullet.source_ids %}[{{ bullet.source_ids | join(', ') }}]{% endif %}
+{% endfor %}
+
+{% if briefing.background %}
+## Background
+{{ briefing.background }}
+{% endif %}
+
+## Key Developments (Last 30 Days)
+{% for dev in briefing.draft.developments %}
+- **{{ dev.date.strftime('%Y-%m-%d') if dev.date else 'Recent' }}** · `[{{ dev.category | upper }}]` **{{ dev.headline }}** — {{ dev.detail }} [{% for sid in dev.source_ids %}{{ sid }}{% if not loop.last %}, {% endif %}{% endfor %}] *({{ dev.confidence.value }})*
+  *Why it matters: {{ dev.why_it_matters }}*
+{% else %}
+*No developments found within the 30-day window.*
+{% endfor %}
+
+{% if briefing.draft.talking_points %}
+## Suggested Talking Points *(Suggested)*
+{% for tp in briefing.draft.talking_points %}
+- {{ tp.text }} {% if tp.source_ids %}[{{ tp.source_ids | join(', ') }}]{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if briefing.draft.open_questions %}
+## Open Questions to Ask
+{% for q in briefing.draft.open_questions %}
+- **{{ q.text }}**  
+  *Rationale: {{ q.rationale }}* {% if q.source_ids %}[{{ q.source_ids | join(', ') }}]{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if briefing.draft.risks %}
+## Risks & Watch-outs
+{% for risk in briefing.draft.risks %}
+- ⚠️ {{ risk.text }} {% if risk.source_ids %}[{{ risk.source_ids | join(', ') }}]{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if briefing.draft.uncertainties or briefing.draft.evidence_gaps %}
+## Unverified, Conflicting & Not Found
+{% for unc in briefing.draft.uncertainties %}
+- ⚠️ *Unverified:* {{ unc }}
+{% endfor %}
+{% for gap in briefing.draft.evidence_gaps %}
+- 🔍 *Evidence Gap:* {{ gap }}
+{% endfor %}
+{% endif %}
+
+## Sources
+{% for s in briefing.sources %}
+[{{ s.id }}] **{{ s.title }}** — *{{ s.domain }}* — {{ s.published_date.strftime('%Y-%m-%d') if s.published_date else 'Undated' }} — <{{ s.url }}>
+{% endfor %}
+
+---
+*AI-assisted briefing. Verify critical facts via the linked sources.*  
+*Confidence Legend: VERIFIED (>=2 independent sources or primary source) · REPORTED (single source) · UNVERIFIED (undated/unconfirmed)*

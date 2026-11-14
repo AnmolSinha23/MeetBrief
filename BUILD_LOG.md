@@ -57,6 +57,23 @@
   - Fixed Pydantic `Development.date` field annotation to prevent class-level namespace shadowing.
   - Added unit tests in `tests/test_verify.py`; 17/17 tests passing.
   - Checkpoint 4 validation run verified end-to-end for both Company (Stripe) and Person (Jensen Huang) with 100% citation coverage and valid URLs.
+- **Phase 5 (Orchestrator, render, REST API)**: Completed.
+  - Implemented `app/templates/briefing.html.j2` (A4 print styles, badge styling, clickable citation anchors).
+  - Implemented `app/templates/briefing.md.j2` (structured Markdown export).
+  - Implemented `app/steps/render.py` (word budget <= 520, trimming priority order, date/confidence sorting).
+  - Implemented `app/jobs.py` (in-memory job store for async progress polling).
+  - Implemented `app/pipeline.py` (7-step pipeline orchestrator, trace capture, stats calculation, disk persistence).
+  - Implemented `app/main.py` with all REST API endpoints:
+    - `POST /api/briefings` (202 Accepted)
+    - `GET /api/jobs/{job_id}`
+    - `GET /api/briefings/{id}`
+    - `GET /api/briefings/{id}/view`
+    - `GET /api/briefings/{id}/export.md`
+    - `GET /api/samples/demo`
+    - `GET /api/health`
+  - Generated committed offline sample `data/samples/sample_briefing.json`.
+  - Added `tests/test_render.py`, `tests/test_pipeline_mock.py`, `tests/test_api.py`.
+  - All 25 unit & integration tests passing. `python scripts/doctor.py --offline` PASS.
 
 ## Commands & Outcomes
 - `git init`: initialized repository.

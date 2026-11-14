@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Briefing: {{ briefing.entity.canonical_name }}</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 10mm 12mm;
+    }
+    :root {
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --border-color: #e2e8f0;
+      --verified-bg: #dcfce7;
+      --verified-text: #166534;
+      --reported-bg: #e0f2fe;
+      --reported-text: #0369a1;
+      --unverified-bg: #fef3c7;
+      --unverified-text: #92400e;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-family);
+      font-size: 9.5pt;
+      line-height: 1.35;
+      color: var(--text-main);
+      background-color: #ffffff;
+      padding: 12px 16px;
+    }
+    .briefing-card {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .entity-title {
+      font-size: 17pt;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      vertical-align: middle;
+    }
+    .badge-type { background-color: #f1f5f9; color: #475569; }
+    .badge-meeting { background-color: #eff6ff; color: #2563eb; }
+    .badge-VERIFIED { background-color: var(--verified-bg); color: var(--verified-text); }
+    .badge-REPORTED { background-color: var(--reported-bg); color: var(--reported-text); }
+    .badge-UNVERIFIED { background-color: var(--unverified-bg); color: var(--unverified-text); }
+
+    .meta-bar {
+      font-size: 8pt;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .meta-bar span strong { color: #334155; }
+
+    .section {
+      margin-bottom: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .section-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-left: 3px solid var(--primary);
+      padding-left: 6px;
+      margin-bottom: 4px;
+    }
+    .background-box {
+      font-size: 9pt;
+      color: #334155;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      border-left: 3px solid #cbd5e1;
+    }
+
+    .tldr-list {
+      list-style-type: none;
+    }
+    .tldr-item {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 3px;
+    }
+    .tldr-item::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .timeline-item {
+      padding: 4px 6px;
+      background: #fafafa;
+      border-radius: 4px;
+      border: 1px solid #f1f5f9;
+      break-inside: avoid;
+    }
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .timeline-date {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #64748b;
+      white-space: nowrap;
+    }
+    .category-tag {
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #0284c7;
+      margin-right: 4px;
+    }
+    .headline {
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .why-matters {
+      font-size: 8pt;
+      font-style: italic;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .question-item {
+      margin-bottom: 4px;
+      padding-left: 12px;
+      position: relative;
+    }
+    .question-item::before {
+      content: "Q:";
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      font-size: 7.5pt;
+      color: var(--primary);
+    }
+    .question-rationale {
+      font-size: 8pt;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .caution-box {
+      background-color: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 8.5pt;
+      color: #78350f;
+      margin-bottom: 8px;
+    }
+    .caution-title {
+      font-weight: 700;
+      font-size: 8pt;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      color: #92400e;
+    }
+
+    .cite-link {
+      color: #0284c7;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 7.5pt;
+      margin-left: 3px;
+    }
+    .cite-link:hover {
+      text-decoration: underline;
+    }
+
+    .sources-section {
+      border-top: 1px solid var(--border-color);
+      padding-top: 6px;
+      font-size: 7.5pt;
+      color: #64748b;
+    }
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px 12px;
+    }
+    .source-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .source-item a {
+      color: #475569;
+      text-decoration: none;
+    }
+    .source-item a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 8px;
+      padding-top: 4px;
+      border-top: 1px dashed var(--border-color);
+      font-size: 7.5pt;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .legend {
+      display: flex;
+      gap: 8px;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: none;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .briefing-card {
+        box-shadow: none;
+        border: none;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="briefing-card">
+    <header class="header">
+      <div class="header-top">
+        <div>
+          <span class="entity-title">{{ briefing.entity.canonical_name }}</span>
+          <span class="badge badge-type">{{ briefing.entity.entity_type }}</span>
+          <span class="badge badge-meeting">{{ briefing.input.meeting_type.value }}</span>
+        </div>
+        <div style="font-size: 8pt; color: #64748b;">
+          MeetBrief A4 One-Pager
+        </div>
+      </div>
+      <div class="meta-bar">
+        <span><strong>Meeting:</strong> {{ meeting_formatted }} ({{ briefing.input.timezone }})</span>
+        <span><strong>Research Window:</strong> {{ briefing.window.start.strftime('%d %b %Y') }} – {{ briefing.window.end.strftime('%d %b %Y') }}</span>
+        <span><strong>Generated:</strong> {{ briefing.created_at.strftime('%d %b %Y %H:%M UTC') }}</span>
+      </div>
+    </header>
+
+    {% if briefing.background %}
+    <div class="background-box">
+      <strong>Background:</strong> {{ briefing.background }}
+    </div>
+    {% endif %}
+
+    <div class="section">
+      <div class="section-title">Executive Summary</div>
+      <ul class="tldr-list">
+        {% for bullet in briefing.draft.tldr %}
+        <li class="tldr-item">
+          {{ bullet.text }}
+          {% for sid in bullet.source_ids %}
+            <a href="#{{ sid }}" class="cite-link">[{{ sid }}]</a>
+          {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Key Developments (Last 30 Days)</div>
+      <div class="timeline">
+        {% for dev in briefing.draft.developments %}
+        <div class="timeline-item">
+          <div class="timeline-head">
+            <div>
+              <span class="timeline-date">{{ dev.date.strftime('%d %b') if dev.date else 'Recent' }}</span> ·
+              <span class="category-tag">[{{ dev.category }}]</span>
+              <span class="headline">{{ dev.headline }}</span>
+              — {{ dev.detail }}
+              {% for sid in dev.source_ids %}
+                <a href="#{{ sid }}" class="cite-link">[{{ sid }}]</a>
+              {% endfor %}
+            </div>
+            <div>
+              <span class="badge badge-{{ dev.confidence.value }}" title="Confidence computed by code">{{ dev.confidence.value }}</span>
+            </div>
+          </div>
+          {% if dev.why_it_matters %}
+          <div class="why-matters">Why it matters: {{ dev.why_it_matters }}</div>
+          {% endif %}
+        </div>
+        {% else %}
+        <div style="font-style: italic; color: #94a3b8;">No developments confirmed within the 30-day window.</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="grid-two">
+      <div class="section">
+        <div class="section-title">Suggested Talking Points</div>
+        <ul style="list-style: none;">
+          {% for tp in briefing.draft.talking_points %}
+          <li style="margin-bottom: 4px; padding-left: 10px; position: relative;">
+            <span style="position: absolute; left: 0; color: #0284c7;">›</span>
+            {{ tp.text }}
+            {% for sid in tp.source_ids %}
+              <a href="#{{ sid }}" class="cite-link">[{{ sid }}]</a>
+            {% endfor %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Open Questions to Ask</div>
+        <div>
+          {% for q in briefing.draft.open_questions %}
+          <div class="question-item">
+            <span>{{ q.text }}</span>
+            {% if q.rationale %}
+            <div class="question-rationale">{{ q.rationale }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% if briefing.draft.uncertainties or briefing.draft.evidence_gaps or briefing.draft.risks %}
+    <div class="caution-box">
+      <div class="caution-title">Unverified Findings, Risks & Evidence Gaps</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div>
+          {% for unc in briefing.draft.uncertainties %}
+          <div>⚠️ <em>Uncertain:</em> {{ unc }}</div>
+          {% endfor %}
+          {% for gap in briefing.draft.evidence_gaps %}
+          <div>🔍 <em>Gap:</em> {{ gap }}</div>
+          {% endfor %}
+        </div>
+        <div>
+          {% for r in briefing.draft.risks %}
+          <div>⚡ <em>Risk:</em> {{ r.text }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="sources-section">
+      <div style="font-weight: 700; margin-bottom: 3px; text-transform: uppercase;">Sources & Citations</div>
+      <div class="sources-grid">
+        {% for s in briefing.sources %}
+        <div class="source-item" id="{{ s.id }}">
+          <strong>[{{ s.id }}]</strong>
+          <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.title }}</a>
+          ({{ s.domain }}{% if s.published_date %} · {{ s.published_date.strftime('%Y-%m-%d') }}{% endif %}{% if s.is_primary %} · <em>Primary</em>{% endif %})
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>AI-assisted research briefing. Verify critical figures via cited primary sources.</div>
+      <div class="legend">
+        <span><strong style="color:var(--verified-text)">VERIFIED:</strong> &ge;2 clusters / primary</span>
+        <span><strong style="color:var(--reported-text)">REPORTED:</strong> single source</span>
+        <span><strong style="color:var(--unverified-text)">UNVERIFIED:</strong> undated/unconfirmed</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
