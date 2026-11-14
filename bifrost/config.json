@@ -1,0 +1,8 @@
+{
+  "port": 8080,
+  "providers": {
+    "gemini": {
+      "apiKey": "${GEMINI_API_KEY}"
+    }
+  }
+}
