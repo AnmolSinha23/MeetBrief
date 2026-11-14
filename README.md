@@ -77,8 +77,8 @@ Clone the repository and set up a virtual environment:
 
 ```bash
 # Clone repository
-git clone https://github.com/<GITHUB_USERNAME>/meetbrief.git
-cd meetbrief
+git clone https://github.com/AnmolSinha23/MeetBrief.git
+cd MeetBrief
 
 # Create and activate virtual environment
 python -m venv .venv

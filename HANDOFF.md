@@ -156,7 +156,7 @@ git status
 
 # Rename branch and set remote
 git branch -M main
-git remote add origin https://github.com/<GITHUB_USERNAME>/meetbrief.git
+git remote add origin https://github.com/AnmolSinha23/MeetBrief.git
 
 # Stage any new live artifacts and commit
 git add -A
@@ -178,7 +178,7 @@ git push origin v0.1.0
 
 1. Follow the 2.5-minute script in [`docs/demo-script.md`](docs/demo-script.md) to record your presentation walkthrough.
 2. Submit your project on the Hackathon portal:
-   - **Repository Link**: `https://github.com/<GITHUB_USERNAME>/meetbrief`
+   - **Repository Link**: `https://github.com/AnmolSinha23/MeetBrief`
    - **Demo Video URL**: Your uploaded YouTube / Loom link.
    - **Problem Statement**: #05 (Pre-Meeting Briefing Agent).
 
